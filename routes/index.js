@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 if(req.session.islogin){
   res.locals.islogin=req.session.islogin;
 }
-res.render('index', { title: 'HOME',test:res.locals.islogin});
+res.render('index', { title: 'HOME',test:res.session.fullName});
 });
 
 
@@ -23,7 +23,7 @@ router.route('/login')
       if(req.cookies.islogin){
           req.session.islogin=req.cookies.islogin;
       }
-      res.render('login', { title: 'User login' ,test:res.locals.islogin});
+      res.render('login', { title: 'User login' ,test:req.session.fullName});
   })
   .post(function(req, res) {
       client=usr.connect();
@@ -32,16 +32,17 @@ router.route('/login')
           result=null;
           usr.tutorLogin(client,req.body.username, function (result) {
               if(result[0]===undefined){
-                  res.send('NO Such a user');
+                  //res.send('NO Such a user');
+                  res.redirect('/login');
               }else{
                   if(result[0].password===req.body.password){
                       req.session.islogin=result[0].tutor_id;
-                      req.session.fullName = result[0].first_name+result[0].last_name;
+                      req.session.fullName = result[0].first_name+" "+result[0].last_name;
                       req.session.identity = "tutor";
                       res.locals.islogin=req.session.islogin;
                       res.cookie('islogin',res.locals.islogin,{maxAge:60000});
-                      //res.redirect('/tutorDashboard');
-                      res.redirect('/home');
+                      res.redirect('tutor_dashboard');
+                      //res.redirect('/home');
                   }else
                   {
                       res.redirect('/login');
@@ -60,8 +61,8 @@ router.route('/login')
                       req.session.identity = "student";
                       res.locals.islogin=req.session.islogin;
                       res.cookie('islogin',res.locals.islogin,{maxAge:60000});
-                      //res.redirect('/studentDashboard');
-                      res.redirect('/home');
+                      res.redirect('/studentDashboard');
+                      //res.redirect('/home');
                   }else
                   {
                       res.redirect('/login');
@@ -98,11 +99,12 @@ router.route('/reg')
       if(req.body.identity=="tutor"){
           usr.insertTutor(client,req.body.username ,req.body.password2, function (err) {
               if(err) throw err;
-              res.send('Sign up successful');})
+              res.redirect("/login");
+            });
       }else{
           usr.insertStudent(client,req.body.username ,req.body.password2, function (err) {
               if(err) throw err;
-              res.send('Sign up successful');
+              res.redirect("/login");
         });
       }
       

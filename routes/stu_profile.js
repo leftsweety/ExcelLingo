@@ -5,7 +5,12 @@ var db = require("./db.js");
 
 router.get('/', function (req, res, next) {
     var id = req.session.islogin;
-    
+    if (id == null) {
+        res.redirect("./login");
+    }  
+    if (req.session.identity =="tutor") {
+        res.redirect('/tutor_dashboard');
+    }
 
     db.query('select * from student where student_id = '+id, function (err, rows) {
       console.log('==========');
@@ -38,10 +43,10 @@ router.post('/update', function (req, res) {
     var language_to_learn = req.body.language_to_learn;
     var level = req.body.level;
     var email = req.body.email;
-    var password = req.body.password;
+    // var password = req.body.password;
 
     db.query("update student set first_name='" + first_name + "',last_name='" + last_name+ "',native_language='" 
-    +native_language+ "',language_to_learn='" + language_to_learn+"',level='" + level+"',email='" + email+"',password='" + password+"' where student_id=" + id, function (err, rows) {
+    +native_language+ "',language_to_learn='" + language_to_learn+"',level='" + level+"',email='" + email+"' where student_id=" + id, function (err, rows) {
         if (err) {
             res.end('修改失败：' + err);
         } else {

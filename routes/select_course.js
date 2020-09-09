@@ -55,7 +55,8 @@ exports.tutorSelectCourse = function(req, res) {
         res.render('pages/select_course', {
           title: 'Express',
           to_select: to_select,
-          selected: selected
+          selected: selected,
+          myName : name
 
 
         });

@@ -1,101 +1,185 @@
-<!-- views/pages/about.ejs -->
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zxx">
+
 <head>
-    <% include ../partials/head %>
+  <meta charset="utf-8">
+  <title>ExcelLingo</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css">
+  <!-- slick slider -->
+  <link rel="stylesheet" href="/plugins/slick/slick.css">
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css">
+  <!-- animation css -->
+  <link rel="stylesheet" href="/plugins/animate/animate.css">
+  <!-- aos -->
+  <link rel="stylesheet" href="/plugins/aos/aos.css">
+  <!-- venobox popup -->
+  <link rel="stylesheet" href="/plugins/venobox/venobox.css">
+
+  <!-- Main Stylesheet -->
+  <link href="/css/style.css" rel="stylesheet">
+  
+  <!--Favicon-->
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
 </head>
-<body class="container">
 
-<header>
-    <% include ../partials/header %>
-    <script src="js/jquery-3.0.0.min.js"></script>
+<body>
+  
 
-    <script src="js/jquery.params.js"></script>
+<!-- header -->
+<header class="fixed-top header">
+  <!-- top header -->
+  <div class="top-header py-2 bg-white">
+    <div class="container">
+      <div class="row no-gutters">
+        <div class="col-lg-4 text-center text-lg-left">
+          <a class="text-color mr-3" href="callto:+443003030266"><strong>CALL</strong> +650 390 3922</a>
+          <ul class="list-inline d-inline">
+            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-facebook"></i></a></li>
+            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
+            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-linkedin"></i></a></li>
+            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-instagram"></i></a></li>
+          </ul>
+        </div>
+        <div class="col-lg-8 text-center text-lg-right">
+          <ul class="list-inline">
+            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="/logout">log out</a></li>
+            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="/login" >login</a></li>
+            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="/reg">register</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- navbar -->
+  <div class="navigation w-100">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light p-0">
+        <a class="navbar-brand" href="/index.html"><img src="/images/logo.png" alt="logo"></a>
+        <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation"
+          aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navigation">
+          <ul class="navbar-nav ml-auto text-center">
+            <li class="nav-item @@home">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item @@about">
+              <a class="nav-link" href="/studentDashboard">Dashboard</a>
+            </li>
+            <li class="nav-item @@courses">
+                <a class="nav-link" href="/stuProfile">Profiles</a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
 </header>
+main>
+<section class="page-title-section overlay" data-background="images/backgrounds/page-title.jpg">
+        <div class="container">
+            <div class="row">
+            <div class="col-md-8">
+                <ul class="list-inline custom-breadcrumb">
+                <li class="list-inline-item"><a class="h2 text-primary font-secondary">Our Course</a></li>
+                <li class="list-inline-item text-white h3 font-secondary nasted"><%= myCourseName%></li>
+                </ul>
+                <p class="text-lighten">Explore new language course and choose a favoriate tutor!</p>
+            </div>
+            </div>
+        </div>
+</section>
 
-<main>
+
+
+  <!-- teacher details -->
+<section class="section">
+        <div class="container">
+            <h2 class="section-title">Course details</h2>
+          <div class="row">
+            <div class="col-md-5 mb-5">
+              <img class="img-fluid w-100" src="images/courses/img-<%=myCourseId%>.jpeg" alt="course thumbr">
+            </div>
+            <div class="col-md-6 mb-5">
+              <h3><%= myCourseName%></h3>
+              <p class="mb-5"><%= myDescription%></p>
+              <div class="row">
+                    <!-- <div class="col-md-6 mb-5 mb-md-0"> </div><h4 class="text-color"> $<%= myPrice%></h4> -->
+                <div class="col-md-10 mb-5 mb-md-0">
+                  <h4 class="mb-4">Class lists:</h4>
+                  <ul class="list-styled">
+                        <% for ( var i = 0 ; i < class_id.length ; i++){ %>
+                            <li class="mb-3"><a class="text-color"> <%= description[i] %></a></li>
+
+                        <% } %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+        </div>
+    </section>
 
 <!-- <div class=""> -->
-    <div class="row">    
-        <div class="col-xs-6 col-sm-3">
-            <h1><%= myCourseName%></h1>
-        </div>
-        <div  class="col-xs-6 col-sm-3">
-            <h3><%= myDescription%></h3>
-        </div>
-        <div  class="col-xs-6 col-sm-3">
-            <h3>$USD <%= myPrice%></h3>
-        </div>
-        <!-- </div>  --> 
-</div>
-<div class = "col-sm-16">
-        <ul>
-         <table class="table table-striped">
-                <h3> Schedule </h3>
-                <% for ( var i = 0 ; i < class_id.length ; i++){ %>
-                    <tr>
-                        <td> 
-                            <%= description[i] %>
-                        </td>
-                            <!-- <input type="button" value="Give Feedbak" 
-                                οnclick="window.location.href='pages/index'"> -->
-
-                    </tr>
-                <% } %>
-         </table>
-         <br>
-         <table class="table table-striped">
-         <h3> Select A Tutor: </h3>
-                <tr>
-                <td>
-                    Tutor Name
-                </td> 
-                <td>
-                    Native Language
-                </td> 
-                <td>
-                    Tutor Language Level
-                </td>   
-                <td>
-                    Teaching Experience
-                </td>
-                <td>
-                    Select
-                </td> 
-                </tr>    
-                <% for ( var j = 0 ; j < tutor_id.length ; j++){ %>
-                    <tr>
-                            <td> 
-                                <%= first_name[j] %> <%= last_name[j] %>
-                            </td>
-                                <!-- <input type="button" value="Give Feedbak" 
-                                    οnclick="window.location.href='pages/index'"> -->
-                            <td> 
-                                <%= native_language[j] %>
-                            </td>           
-                            <td>
-                                <%= level[j] %>
-                            </td>
-                            <td>
-                                <%= teaching_experience[j] %>
-                            </td> 
-                            <td>
-                                <button onclick="location.href = './pay?course_id=<%=myCourseId%>&tutor_id=<%=tutor_id[j]%>'" id="payButton" class="submit-button" >Buy</button>
-                            </td>        
-                        </tr>
-                <% } %>
-            </table> 
-            <br>
-         <br>
-        </ul>
+<section class="section">
+    <div class="container">
+        <!-- course list -->
+        <h2 class="section-title">Choose your tutor for the Course</h2>
+        <div class="row justify-content-center">
+        
+    <!-- course item -->
+            <% for(var i=0; i< tutor_id.length; i++){%>
+            <div class="col-lg-4 col-sm-6 mb-5">
+                <div class="card p-0 border-primary rounded-0 hover-shadow">
+                <img class="card-img-top rounded-0" src="images/courses/course-1.jpg" alt="course thumb">
+                <div class="card-body">
+                    <h4 class="card-title"><%= first_name[i] %> <%= last_name[i] %></h4>
+                    <p class="card-text mb-4"> level: <%= level[i] %> <%= teaching_experience[i] %></p>
+                    <p class="card-text mb-4"> <%= teaching_experience[i] %></p>
+                    <div class="d-md-table-cell text-right pr-0 pr-md-4"><a href='./pay?course_id=<%=myCourseId%>&tutor_id=<%=tutor_id[i]%>' class="btn btn-primary">Select</a> </div>
+                </div>
+                </div>
+            </div>
+            <% } %>
+        </div> 
 
     </div>
-</main>
+</section>
+
 
 <footer>
-    <% include ../partials/footer %>
+  <%- include ../footer1%>
 </footer>
+
+<!-- jQuery -->
+<script src="/plugins/jQuery/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/plugins/bootstrap/bootstrap.min.js"></script>
+<!-- slick slider -->
+<script src="/plugins/slick/slick.min.js"></script>
+<!-- aos -->
+<script src="/plugins/aos/aos.js"></script>
+<!-- venobox popup -->
+<script src="/plugins/venobox/venobox.min.js"></script>
+<!-- mixitup filter -->
+<script src="/plugins/mixitup/mixitup.min.js"></script>
+<!-- google map -->
+
+<script src="/plugins/google-map/gmap.js"></script>
+
+<!-- Main Script -->
+<script src="/js/script.js"></script>
 
 </body>
 </html>

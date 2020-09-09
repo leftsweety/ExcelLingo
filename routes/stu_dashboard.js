@@ -6,9 +6,13 @@ var db = require("./db.js");
 
 router.get('/', function (req, res, next) {
     var student_id = req.session.islogin;
+    // var student_id = 1;
     var name = req.session.fullName;
     if(student_id == null){
         res.redirect('/login');
+    }
+    if (req.session.identity == "tutor") {
+        res.redirect('/tutor_dashboard');
     }
     var completed_course_num = "SELECT COUNT(*) as course_num FROM recording where student_id ="+student_id+" and is_graded = 1";
     var wait_grade_num = "SELECT COUNT(*) as grade_num FROM recording where student_id ="+student_id+" and is_graded = 0";
@@ -24,8 +28,10 @@ router.get('/', function (req, res, next) {
                         res.render('stu_dashboard.ejs', {title: 'Express', name:name, numOfCplt:"Error", numOfWait:'error', myCourse:[], RecommendCourse:[]});  // this renders "views/stu_dashboard.html"
                     } else {
                         var numOfCplt_res = completed_course_out[0].course_num;
+                        console.log(student_id);
                         console.log(completed_course_out[0].course_num);
                         var numOfWait_res = wait_grade_num_out[0].grade_num;
+                        console.log(my_course_out);
                         res.render('stu_dashboard.ejs', {title: 'Express',name:name, numOfCplt:numOfCplt_res, numOfWait:numOfWait_res, myCourse:my_course_out, RecommendCourse:recommend_courses_out});
                     }
                 }) 

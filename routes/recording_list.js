@@ -6,8 +6,13 @@ var ejs = require("ejs");
 var express = require('express');
 
 exports.recordingList = function(req, res){
-    var student_id = 1;
-    var recordingLists = "SELECT first_name as surname, last_name as lastname, level as levels from student where student_id ="+student_id+" ; SELECT recording.recording_id as recording, recording.submitted_date as time, class.description as description FROM recording inner join class on recording.class_id = class.class_id where recording.student_id ="+student_id+" and recording.is_graded = 0 order by recording.submitted_date ";
+    var student_id = req.query.student_id;
+    var tutor_id = req.session.islogin;
+    var course_id = req.query.course_id;
+   if (tutor_id == null) {
+       res.redirect("./login");
+   }
+    var recordingLists = "SELECT first_name as surname, last_name as lastname, level as levels from student where student_id ="+student_id+" ; SELECT recording.recording_id as recording, recording.submitted_date as time, class.description as description FROM recording inner join class on recording.class_id = class.class_id and class.course_id = "+course_id+" where recording.student_id ="+student_id+" and recording.tutor_id =" + tutor_id+" and recording.is_graded = 0 order by recording.submitted_date; SELECT course_name from course where course_id = " +course_id; 
     console.log("Query is:" + recordingLists);
 	mysqlpool.handle_database(function(err,result){
 		if(err){
@@ -23,7 +28,7 @@ exports.recordingList = function(req, res){
             firstName =result[0][0].surname;
             lastName =result[0][0].lastname;
             languageLevel =result[0][0].levels;
-            
+            course_name = result[2][0].course_name;
             Object.keys(result[1]).forEach(function(key) {
               recordingList[key] =result[1][key].recording;
               timeList[key] = result[1][key].time;
@@ -39,6 +44,7 @@ exports.recordingList = function(req, res){
             
             //create the data send to front-end
             recordingListView = [
+                course_name = course_name,
                 mySurname = firstName,
                 myLastname = lastName,
                 myLevel = languageLevel,

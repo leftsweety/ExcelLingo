@@ -17,6 +17,8 @@ var tutor_id;
 
 // data can get from database
 exports.buyCourse = function(req, res) {
+    console.log("p-----------p");
+    console.log(req.query);
      course_id = req.query.course_id;
      student_id = req.session.islogin;
      tutor_id = req.query.tutor_id;

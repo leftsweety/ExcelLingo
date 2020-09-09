@@ -10,23 +10,31 @@ var express = require('express');
 
 exports.recording = function(req, res) {
   var course_id = req.query.course_id;
+  // course_id = 3;
   var class_id = req.query.class_id;
-  var student_id =  req.session.islogin;
+  // class_id = 9;
+  var name = req.session.fullName;
   
+  var student_id =  req.session.islogin;
+  // student_id = 1;
   if(student_id == null){
     res.redirect('/login');
   }
   console.log(class_id);
   console.log(student_id)
   console.log(course_id);
+  var status = 1;
+  // console.log(course_id);
   if (typeof(class_id) == "undefined") {
-     class_id = 23;
+     class_id = 9;
+     status = 0;
+
   }
   console.log(class_id);
     // console.log(req.query.course_id);
     console.log("hi there!!!!!");
     
-    var selectRecording = "Select * from course where course_id = "+ course_id +";SELECT * from class where course_id =" + course_id+"; Select * from recording where class_id = " + class_id +" and student_id = " + student_id+ " ORDER BY recording_id DESC LIMIT 1 ; Select * from class where class_id = " + class_id+"; Select tutor_id from `order`  where student_id = " +student_id+ " and course_id ="+ course_id;
+    var selectRecording = "Select * from course where course_id = "+ course_id +";SELECT * from class where course_id =" + course_id+"; Select * from recording where class_id = " + class_id +" and student_id = " + student_id+ " ORDER BY recording_id DESC LIMIT 1 ; Select * from class where class_id = " +class_id+"; Select tutor_id from `order`  where student_id = " +student_id+ " and course_id ="+ course_id;
     console.log("query for to recording to select from student:" + student_id );
       mysqlpool.handle_database(function(err,result){
         if(err){
@@ -47,7 +55,13 @@ exports.recording = function(req, res) {
          });
          var recording_id, recording_link, comment, isGraded;
          console.log(result[2][0]);
-         console.log(result[2][0])
+         console.log(result[3]);
+         if (status == 1) {
+          curClassLink = result[3][0].video_link;
+         } else {
+           curClassLink = "youtube.com";
+
+         }
          if (typeof(result[2][0]) != "undefined") {
           recordingId =  result[2][0].recording_id;
           recordingLink = result[2][0].link;
@@ -60,7 +74,6 @@ exports.recording = function(req, res) {
            isGraded = 0;
 
          }
-         var curClassLink = result[3][0].video_link;
          var tutor_id = result[4][0].tutor_id;
          console.log(result[1]);
         //  console.log(result[4]);
@@ -95,6 +108,7 @@ exports.recording = function(req, res) {
           title: 'Express',
          courseInfo : courseInfo,
          class_info : classInfo,
+         name: name,
         recording_info: recordingInfo,
         curClassInfo: curClassInfo
 

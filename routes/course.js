@@ -17,15 +17,17 @@ var express = require('express');
 
 exports.course = function(req, res){
     var student_id = req.session.islogin;
+    // student_id =  1;
     var course_id = req.query.course_id;
-  
+
+    // course_id = 4;
     if(student_id == null){
       res.redirect('/login');
     }
     
     var language_to_teach = "English";
 	//var courseDetails = "SELECT course_name as course, price as price, description as description FROM course where course_id  = "+course_id+ "; SELECT class_id, video_link, description FROM class where course_id = "+course_id+" Order by created_date";
-    var courseDetails = "SELECT course_name as course, price as price, description as course_description FROM course where course_id  = "+course_id+ "; SELECT class_id as class, video_link as video, description as class_description FROM class where course_id = "+course_id+" Order by created_date; SELECT tutor_id as tId, first_name as fName, last_name as lName, native_language as nLanguage, level as levels, teaching_experience as experience FROM exl.tutor where language_to_teach= 'English'";
+    var courseDetails = "SELECT course_name as course, price as price, description as course_description FROM course where course_id  = "+course_id+ "; SELECT class_id as class, video_link as video, description as class_description FROM class where course_id = "+course_id+" Order by created_date; SELECT t.tutor_id as tId, t.first_name as fName, t.last_name as lName, t.native_language as nLanguage, t.level as levels, t.teaching_experience as experience FROM tutor  as t inner join tutor_courses on tutor_courses.tutor_id = t.tutor_id and tutor_courses.course_id ="+course_id ;
     console.log("Query is:" + courseDetails);
 	mysqlpool.handle_database(function(err,result){
 		if(err){

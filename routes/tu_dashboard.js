@@ -13,7 +13,9 @@ exports.tutorDashboard = function(req, res) {
 
 //  console.log("hi there !!!!!!! " + req.query.tutor_id);
     var tutor_id =  req.session.islogin;
+    // tutor_id = 1;
     var name = req.session.fullName;
+    console.log(name);
     if(tutor_id == null){
       res.redirect('/login');
   }
@@ -57,6 +59,7 @@ exports.tutorDashboard = function(req, res) {
         
         //create the data send to front-end
         tutorDashBoardInfo = [
+          myName = name,
           myStudentNum = stuNum,
           unCompletedNum = unCompleted,
           completedNum = completed,

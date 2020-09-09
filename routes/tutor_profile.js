@@ -41,10 +41,10 @@ router.post('/update', function (req, res) {
     var level = req.body.level;
     var teaching_experience = req.body.teaching_experience;
     var email = req.body.email;
-    var password = req.body.password;
+    // var password = req.body.password;
 
     db.query("update tutor set first_name='" + first_name + "',last_name='" + last_name+ "',language_to_teach='" 
-    +language_to_teach+ "',native_language='" + native_language+"',level='" + level+"',email='" + email+"',password='" + password+"',teaching_experience='" + teaching_experience+"' where tutor_id=" + id, function (err, rows) {
+    +language_to_teach+ "',native_language='" + native_language+"',level='" + level+"',email='" + email+"',teaching_experience='" + teaching_experience+"' where tutor_id=" + id, function (err, rows) {
         if (err) {
             res.end('修改失败：' + err);
         } else {

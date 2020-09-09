@@ -3,7 +3,7 @@ var mysql      = require('mysql');
 var pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'fanruoyi811',
+    password: '123456',
     database: 'exl'
 });
 
@@ -25,7 +25,7 @@ function connectServer(){
     var client=mysql.createConnection({
         host:'localhost',
         user:'root',
-        password:'fanruoyi811',
+        password:'123456',
         database:'exl'
     })
 
